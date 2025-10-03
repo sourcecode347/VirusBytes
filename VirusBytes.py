@@ -261,13 +261,22 @@ class VirusBytes(FileSystemEventHandler):
             logging.debug(f"Root Destroy...")
         except:
             pass
-        try:
-            logging.debug(f"My PID is : {os.getpid()}")
-            time.sleep(1) 
-            logging.debug(f"Sending SIGINT to self...")
-            os.kill(os.getpid(), signal.SIGINT)
-        except:
-            pass
+        if os.name == 'nt':
+            try:
+                logging.debug(f"My PID is : {os.getpid()}")
+                time.sleep(1) 
+                logging.debug(f"Sending SIGINT to self...")
+                os.kill(os.getpid(), signal.SIGINT)
+            except:
+                pass
+        else:
+            try:
+                logging.debug(f"My PID is : {os.getpid()}")
+                time.sleep(1) 
+                logging.debug(f"Trying to Kill {os.getpid()}")
+                os.system("kill "+str(os.getpid()))
+            except:
+                pass
 
     def get_hashes_connection(self):
         """Create a new SQLite connection for the hashes database."""
