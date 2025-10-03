@@ -11,7 +11,9 @@ Python 3.8 or higher (Download from <a href="https://python.org/donloads">python
 Download and exctract <a href="https://virusbutes.com/VirusBytes.zip">VirusBytes</a>.
 
 # Step 1: Install Python
+
 Ensure Python is installed.Don't forget to check "ADD python.exe to PATH" on Python Installation.
+
 Open a terminal or command prompt and check:
 
     python --version
