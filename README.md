@@ -3,7 +3,7 @@ VirusBytes is a Python-based desktop application. Follow these steps to install 
 # Website
 www.virusbytes.com
 
-<img src="https://github.com/sourcecode347/OSAV-Open_Source_AntiVirus/blob/main/img/VirusBytesScan.png" style="width:100%;height:auto;"/>
+<img src="https://github.com/sourcecode347/VirusBytes/blob/main/img/VirusBytesScan.png" style="width:100%;height:auto;"/>
 
 # Prerequisites
 
@@ -63,6 +63,7 @@ Run the following command for informations
 
     python VirusBytesCLI.py --help
 
+<img src="https://github.com/sourcecode347/VirusBytes/blob/main/img/VirusBytesCLI.png" style="width:100%;height:auto;"/>
 
 # Usage Instructions</h2>
 VirusBytes provides a GUI with multiple tabs for dashboard, scanning, quarantine, monitoring, and settings.
