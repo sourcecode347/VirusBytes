@@ -51,7 +51,7 @@ In the app's Settings tab, enable "Start with Windows (Registry)" to add it to s
 # Step 8: Support This Project
 Make a <a href="https://buy.stripe.com/fZu28keQj5Um1Yk6P01gs00">Donation</a> to support this Open Source Project.
 
-Step 9: Use The VirusBytes Command Line Interface - Cross Platform ( Only Terminal )
+# Step 9: Use The VirusBytes Command Line Interface - Cross Platform ( Only Terminal )
 Download and Exctract the <a href="https://virusbytes.com/VirusBytesCLI.zip">VirusBytesCLI</a>
 
 Run the following command for informations
