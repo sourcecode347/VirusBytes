@@ -5,7 +5,9 @@ www.virusbytes.com
 
 
 # Prerequisites
+
 Python 3.8 or higher (Download from <a href="https://python.org/donloads">python.org</a>).
+
 Download and exctract <a href="https://virusbutes.com/VirusBytes.zip">VirusBytes</a>.
 
 # Step 1: Install Python
