@@ -68,7 +68,7 @@ Run the following command for informations
 ## Usage Instructions</h2>
 VirusBytes provides a GUI with multiple tabs for dashboard, scanning, quarantine, monitoring, and settings.
 
-  # Dashboard Tab
+## Dashboard Tab
   <ul>
       <li>Displays threats blocked, last scan time.</li>
       <li>Buttons to view and clear reports.</li>
