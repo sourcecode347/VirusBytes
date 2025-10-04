@@ -241,21 +241,6 @@ class VirusBytes(FileSystemEventHandler):
             logging.debug(f"Set Running To False...")
         except:
             pass
-        if os.name != 'nt':
-            try:
-                if hasattr(self, 'observer') and self.observer_running:
-                    self.observer.stop()
-                    logging.debug(f"OBServer Thread Stop...")
-                    self.observer.join()
-                    logging.debug(f"OBServer Thread Join...")
-            except:
-                pass
-            try:
-                if self.monitor_thread and self.monitor_thread.is_alive():
-                    self.monitor_thread.join()
-                    logging.debug(f"Monitor Thread Join...")
-            except:
-                pass
         try:
             self.root.destroy()
             logging.debug(f"Root Destroy...")
