@@ -155,8 +155,15 @@ class VirusBytes(FileSystemEventHandler):
         self.monitored_folders = set()
         self.load_monitored_folders()
         if not self.monitored_folders:
-            self.monitored_folders = set([os.path.expanduser("~/Downloads"), os.path.expanduser("~/Documents")])
-            self.save_monitored_folders()
+            if os.name == 'nt':
+                self.monitored_folders = set([os.path.expanduser("~/Downloads"), os.path.expanduser("~/Documents")])
+                self.save_monitored_folders()
+            if platform.system() == "Linux":
+                def is_root():
+                    return os.geteuid() == 0
+                if is_root()==False:
+                    self.monitored_folders = set([os.path.expanduser("~/Downloads"), os.path.expanduser("~/Documents")])
+                    self.save_monitored_folders()
 
         self.reports_file = os.path.join(script_dir, "reports.json")
         self.reports = self.load_reports()
