@@ -1772,8 +1772,14 @@ class VirusBytes(FileSystemEventHandler):
             with tempfile.TemporaryDirectory() as tmp_dir:
                 hdb_path = os.path.join(tmp_dir, "main.hdb")
                 with open(hdb_path, 'w') as f:
-                    for h in hashes:
+                    for i, h in enumerate(hashes):
                         f.write(f"{h}:1:VirusBytes\n")
+                        if (i + 1) % max(1, count // 100) == 0:  # Update roughly 100 times
+                            progress = ((i + 1) / count) * 90  # Reserve 10% for final steps
+                            self.root.after(0, lambda p=progress: self.progress.config(value=p))
+
+                # Update to 90% after writing hashes
+                self.root.after(0, lambda: self.progress.config(value=90))
 
                 tar_io = io.BytesIO()
                 with tarfile.open(fileobj=tar_io, mode="w") as tar:
@@ -1798,13 +1804,15 @@ class VirusBytes(FileSystemEventHandler):
                     f.write(header)
                     f.write(gz_data)
 
+                # Update to 100% after final write
+                self.root.after(0, lambda: self.progress.config(value=100))
+
             self.root.after(0, lambda: messagebox.showinfo("Success", f"Exported {count} hashes to {file_path}"))
             logging.debug(f"Exported {count} hashes to CVD: {file_path}")
         except Exception as e:
             self.root.after(0, lambda: messagebox.showerror("Error", f"Failed to export CVD: {str(e)}"))
             logging.error(f"Failed to export CVD to {file_path}: {str(e)}")
         finally:
-            self.root.after(0, lambda: self.progress.config(value=100))
             self.root.after(0, lambda: self.current_label.config(text=""))
             gc.collect()
 
@@ -1822,8 +1830,22 @@ class VirusBytes(FileSystemEventHandler):
             with self.hashes_lock:
                 with self.get_hashes_connection() as conn:
                     cur = conn.cursor()
+                    cur.execute("SELECT COUNT(*) FROM hashes")
+                    total = cur.fetchone()[0]
+                    hashes = set()
+                    batch_size = 100000  # Larger batch size for fewer updates and faster processing
                     cur.execute("SELECT hash FROM hashes")
-                    hashes = set(row[0] for row in cur.fetchall())
+                    processed = 0
+                    while True:
+                        batch = cur.fetchmany(batch_size)
+                        if not batch:
+                            break
+                        for row in batch:
+                            hashes.add(row[0])
+                        processed += len(batch)
+                        progress = (processed / total * 100) if total > 0 else 100
+                        self.root.after(0, lambda p=progress: self.progress.config(value=p))
+                        self.root.after(0, self.root.update_idletasks)
             with open(file_path, 'wb') as f:
                 pickle.dump(hashes, f)
             self.root.after(0, lambda: messagebox.showinfo("Success", f"Exported {len(hashes)} hashes to {file_path}"))
