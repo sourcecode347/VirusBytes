@@ -82,7 +82,7 @@ VirusBytes provides a GUI with multiple tabs for dashboard, scanning, quarantine
       <li>Export database to CVD or PKL.</li>
       <li>Scan a folder, pause/cancel scan.</li>
       <li>View scan progress and results.</li>
-      <li>Actions: Delete selected/all detections, extract detections to TXT, remove hash from DB.</li>
+      <li>Actions: Delete selected/all detections, extract detections to TXT, remove hash from DB, check selected on virustotal.</li>
   </ul>
 
   # Quarantine Tab</h3>
