@@ -20,7 +20,8 @@ from watchdog.events import FileSystemEventHandler
 import psutil
 if os.name == 'nt':
     import winreg
-    import GPUtil  # For GPU monitoring, install with pip install gputil    
+    import GPUtil  # For GPU monitoring, install with pip install gputil
+    import ctypes 
 import json
 import urllib.parse
 import requests
@@ -156,8 +157,14 @@ class VirusBytes(FileSystemEventHandler):
         self.load_monitored_folders()
         if not self.monitored_folders:
             if os.name == 'nt':
-                self.monitored_folders = set([os.path.expanduser("~/Downloads"), os.path.expanduser("~/Documents")])
-                self.save_monitored_folders()
+                def is_admin():
+                    try:
+                        return ctypes.windll.shell32.IsUserAnAdmin()
+                    except:
+                        return False
+                if is_admin()==False:
+                    self.monitored_folders = set([os.path.expanduser("~/Downloads"), os.path.expanduser("~/Documents")])
+                    self.save_monitored_folders()
             if platform.system() == "Linux":
                 def is_root():
                     return os.geteuid() == 0
