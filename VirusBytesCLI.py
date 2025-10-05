@@ -448,7 +448,7 @@ def print_custom_help():
     print("+-----------------------------------+------------------------------------------------------------+")
     print("| --help                            | Show this help message and exit.                           |")
     print("+-----------------------------------+------------------------------------------------------------+")
-    print("Please Make a Donate to Support This Open Source Project : \n https://buy.stripe.com/fZu28keQj5Um1Yk6P01gs00")
+    print("Please Make a Donation to Support This Open Source Project : \n https://buy.stripe.com/fZu28keQj5Um1Yk6P01gs00")
     sys.exit(0)
 
 if __name__ == "__main__":
@@ -476,28 +476,28 @@ if __name__ == "__main__":
 
     if args.updatedb:
         app.update_db()
-        print("Please Make a Donate to Support This Open Source Project : \n https://buy.stripe.com/fZu28keQj5Um1Yk6P01gs00")
+        print("Please Make a Donation to Support This Open Source Project : \n https://buy.stripe.com/fZu28keQj5Um1Yk6P01gs00")
     elif args.scan and args.path:
         if args.delete and args.quarantine:
             logging.error("Cannot use --delete and --quarantine together.")
-            print("Please Make a Donate to Support This Open Source Project : \n https://buy.stripe.com/fZu28keQj5Um1Yk6P01gs00")
+            print("Please Make a Donation to Support This Open Source Project : \n https://buy.stripe.com/fZu28keQj5Um1Yk6P01gs00")
             sys.exit(1)
         app.scan_folder(args.path, delete=args.delete, quarantine=args.quarantine, output=args.output)
-        print("Please Make a Donate to Support This Open Source Project : \n https://buy.stripe.com/fZu28keQj5Um1Yk6P01gs00")
+        print("Please Make a Donation to Support This Open Source Project : \n https://buy.stripe.com/fZu28keQj5Um1Yk6P01gs00")
     elif args.view and args.quarantine:
         app.view_quarantine()
-        print("Please Make a Donate to Support This Open Source Project : \n https://buy.stripe.com/fZu28keQj5Um1Yk6P01gs00")
+        print("Please Make a Donation to Support This Open Source Project : \n https://buy.stripe.com/fZu28keQj5Um1Yk6P01gs00")
     elif args.remove:
         app.remove_false_positives(args.remove)
-        print("Please Make a Donate to Support This Open Source Project : \n https://buy.stripe.com/fZu28keQj5Um1Yk6P01gs00")
+        print("Please Make a Donation to Support This Open Source Project : \n https://buy.stripe.com/fZu28keQj5Um1Yk6P01gs00")
     elif args.import_hashes:
         app.import_hashes(args.import_hashes)
-        print("Please Make a Donate to Support This Open Source Project : \n https://buy.stripe.com/fZu28keQj5Um1Yk6P01gs00")
+        print("Please Make a Donation to Support This Open Source Project : \n https://buy.stripe.com/fZu28keQj5Um1Yk6P01gs00")
     elif args.infodb:
         app.info_db()
-        print("Please Make a Donate to Support This Open Source Project : \n https://buy.stripe.com/fZu28keQj5Um1Yk6P01gs00")
+        print("Please Make a Donation to Support This Open Source Project : \n https://buy.stripe.com/fZu28keQj5Um1Yk6P01gs00")
     elif args.export:
         app.export_hashes(args.export, args.type)
-        print("Please Make a Donate to Support This Open Source Project : \n https://buy.stripe.com/fZu28keQj5Um1Yk6P01gs00")
+        print("Please Make a Donation to Support This Open Source Project : \n https://buy.stripe.com/fZu28keQj5Um1Yk6P01gs00")
     else:
         print_custom_help()
