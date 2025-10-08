@@ -343,7 +343,7 @@ class VirusBytes(FileSystemEventHandler):
             logging.error(f"Failed to save quarantine metadata: {str(e)}")
 
     def add_donate_link(self, parent_frame):
-        donate_link = ttk.Label(parent_frame, text="Donate", font=('Arial', 8), foreground='#1E90FF', cursor="hand2")
+        donate_link = ttk.Label(parent_frame, text="Donate", font=('Arial', 9), foreground='#1E90FF', cursor="hand2")
         donate_link.pack(side=tk.RIGHT, pady=5)
         donate_link.bind("<Button-1>", lambda e: webbrowser.open("https://buy.stripe.com/fZu28keQj5Um1Yk6P01gs00"))
         return donate_link
@@ -391,13 +391,9 @@ class VirusBytes(FileSystemEventHandler):
         links_frame = ttk.Frame(top_frame)
         links_frame.pack(side=tk.LEFT, padx=5)
 
-        virusbytes_link = ttk.Label(links_frame, text="Update Virus Database via VirusBytes", font=('Arial', 8), foreground='#1E90FF', cursor="hand2")
+        virusbytes_link = ttk.Label(links_frame, text="Update Virus Database via VirusBytes", font=('Arial', 9), foreground='#1E90FF', cursor="hand2")
         virusbytes_link.pack(anchor=tk.W)
         virusbytes_link.bind("<Button-1>", lambda e: webbrowser.open("https://virusbytes.com/VirusBytesDatabase.cvd"))
-
-        clamav_link = ttk.Label(links_frame, text="Update Virus Database via Clamav", font=('Arial', 8), foreground='#1E90FF', cursor="hand2")
-        clamav_link.pack(anchor=tk.W)
-        clamav_link.bind("<Button-1>", lambda e: webbrowser.open("https://clamwin.com/content/view/58/27/"))
 
         self.add_donate_link(top_frame)
 
