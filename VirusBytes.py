@@ -68,7 +68,7 @@ class VirusBytes(FileSystemEventHandler):
                  'recv_label', 'battery_canvas', 'battery_label', 'real_time_var', 'web_protection_var', 
                  'auto_start_var', 'monitored_folders_list', 'observer', 'prev_cpu', 'prev_ram', 
                  'prev_disk', 'prev_gpu', 'prev_battery', 'prev_sent', 'prev_recv', 'hashes_lock', 'urls_lock',
-                 'running', 'monitor_thread', 'hashes_lock2', 'settings_pkl']
+                 'running', 'monitor_thread', 'hashes_lock2', 'settings_pkl', 'dashboard_pkl']
 
     def __init__(self, root):
         self.root = root
@@ -213,12 +213,47 @@ class VirusBytes(FileSystemEventHandler):
         self.settings_pkl = os.path.join(script_dir, "settings.pkl")
         self.load_settings()
 
+        self.dashboard_pkl = os.path.join(script_dir, "dashboard.pkl")
+        self.load_dashboard()
+
         self.web_protection_enabled = self.web_protection_var.get()
         if self.real_time_var.get():
             self.start_real_time_monitoring()
 
         # Start real-time monitoring and other threads
         self.start_system_monitoring()
+
+    def load_dashboard(self):
+        if os.path.exists(self.dashboard_pkl):
+            try:
+                with open(self.dashboard_pkl, 'rb') as f:
+                    data = pickle.load(f)
+                self.threats_blocked = data.get('threats_blocked', 0)
+                last_scan = data.get('last_scan', "None")
+                self.threats_label.config(text=f"Threats Blocked: {self.threats_blocked}")
+                self.scan_history_label.config(text=f"Last Scan: {last_scan}")
+                logging.debug(f"Loaded dashboard data from {self.dashboard_pkl}")
+            except Exception as e:
+                logging.error(f"Failed to load dashboard data: {str(e)}")
+                self.threats_blocked = 0
+                self.threats_label.config(text=f"Threats Blocked: {self.threats_blocked}")
+                self.scan_history_label.config(text="Last Scan: None")
+        else:
+            self.threats_blocked = 0
+            self.threats_label.config(text=f"Threats Blocked: {self.threats_blocked}")
+            self.scan_history_label.config(text="Last Scan: None")
+
+    def save_dashboard(self):
+        try:
+            data = {
+                'threats_blocked': self.threats_blocked,
+                'last_scan': self.scan_history_label.cget("text").replace("Last Scan: ", "")
+            }
+            with open(self.dashboard_pkl, 'wb') as f:
+                pickle.dump(data, f)
+            logging.debug(f"Saved dashboard data to {self.dashboard_pkl}")
+        except Exception as e:
+            logging.error(f"Failed to save dashboard data: {str(e)}")
 
     def load_settings(self):
         if os.path.exists(self.settings_pkl):
@@ -250,6 +285,7 @@ class VirusBytes(FileSystemEventHandler):
 
     def on_close(self):
         self.save_settings()
+        self.save_dashboard()
         try:
             self.running = False
             logging.debug(f"Set Running To False...")
@@ -326,6 +362,9 @@ class VirusBytes(FileSystemEventHandler):
         self.scan_history_label = ttk.Label(self.dashboard_frame, text="Last Scan: None", font=('Arial', 10))
         self.scan_history_label.pack(pady=5)
 
+        clear_blocked_btn = ttk.Button(self.dashboard_frame, text="Clear Blocked Threats", command=self.clear_blocked_threats)
+        clear_blocked_btn.pack(pady=5)
+
         view_reports_btn = ttk.Button(self.dashboard_frame, text="View Reports", command=self.view_reports)
         view_reports_btn.pack(pady=5)
 
@@ -338,6 +377,12 @@ class VirusBytes(FileSystemEventHandler):
             self.logo_image = ImageTk.PhotoImage(img)
             logo_label = ttk.Label(self.dashboard_frame, image=self.logo_image, background='#1e1e1e')
             logo_label.pack(pady=10)
+
+    def clear_blocked_threats(self):
+        self.threats_blocked = 0
+        self.threats_label.config(text=f"Threats Blocked: {self.threats_blocked}")
+        self.save_dashboard()
+        messagebox.showinfo("Success", "Blocked threats counter cleared.")
 
     def setup_scan_tab(self):
         top_frame = ttk.Frame(self.scan_frame)
