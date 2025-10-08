@@ -77,7 +77,7 @@ VirusBytes provides a GUI with multiple tabs for dashboard, scanning, quarantine
 
 ## Scan Tab
   <ul>
-      <li>Update database links for VirusBytes.</li>
+      <li>Update database link for VirusBytes.</li>
       <li>Import database from CVD, TXT, or PKL files.</li>
       <li>Export database to CVD or PKL.</li>
       <li>Scan a folder, pause/cancel scan.</li>
